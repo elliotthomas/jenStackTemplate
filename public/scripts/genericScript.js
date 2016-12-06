@@ -1,5 +1,7 @@
 console.log( 'genero sourced' );
 
+var awardArray = [];
+
 $( document ).ready( function(){
   console.log( 'JQ' );
 
@@ -11,6 +13,13 @@ $( document ).ready( function(){
       url: '/testGet',
       success: function( response ){
         console.log( 'back from get call:', response );
+        for (var i = 0; i < response.length; i++) {
+          var text = $('#container')
+          var outputText = ""
+          outputText += '<p>' + reponse[i].athleteName + ' was ' + response[i].award + ' of the ' + reponse[i].eventName '</p>'
+        }
+        (text).append(outputText);
+
       },
       error: function(){
         console.log( 'error with ajax call...');
@@ -22,13 +31,15 @@ $( document ).ready( function(){
   var postData = function(){
     console.log( 'in postData' );
     // assemble object to send
-    var objectToSend={
-      tester: 'testy'
-    }; // end object to send
+    var newEvent = {
+      eventName:$('#eventName').val(),
+      athleteName:$('#athleteName').val(),
+      award:$('#award').val()
+    };//end assemble object
     $.ajax({
       type: 'POST',
       url: '/testPost',
-      data: objectToSend,
+      data: newEvent,
       success: function( response ){
         console.log( 'back from post call:', response );
       },
@@ -42,9 +53,11 @@ $( document ).ready( function(){
   $( '#testGetButton' ).on( 'click', function(){
     console.log( 'in testGetButton on click' );
     getData();
+
   }); // end testGetButton
   $( '#testPostButton' ).on( 'click', function(){
     console.log( 'in testPostButton on click' );
+
     postData();
   }); // end testGetButton
 

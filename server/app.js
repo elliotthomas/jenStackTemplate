@@ -5,6 +5,8 @@ var bodyParser = require( 'body-parser' );
 var urlEncodedParser = bodyParser.urlencoded( { extended: false } );
 var port = process.env.PORT || 8080;
 
+var awardArray = [];
+
 app.listen( port, function( req, res ){
   console.log( 'server listening on', port );
 }); // end spin up server
@@ -18,8 +20,7 @@ app.get( '/', function( req, res ){
 // testGet
 app.get( '/testGet', function( req, res ){
   console.log( 'testGet url hit' );
-  // do work here
-  // assemble object to return
+  res.send(awardArray)
   var objectToReturn = {
     field0: 'I came from testGet on server'
   }; // end object to return
@@ -30,8 +31,8 @@ app.get( '/testGet', function( req, res ){
 // testPost
 app.post( '/testPost', urlEncodedParser, function( req, res ){
   console.log( 'testPost url hit. req.body:', req.body );
-  // do work here
-  // assemble object to return
+  awardArray.push(req.body);
+  console.log("award array:",awardArray);
   var objectToReturn = {
     field0: 'I came from testPost on server'
   }; // end object to return
